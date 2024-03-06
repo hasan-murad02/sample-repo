@@ -22,25 +22,13 @@ jobs:
         with:
             node-version: 18
       
-      - name: Checkout code
-        uses: actions/checkout@v2
-        
-      - name: install dependencies
-        run: npm install
-    
-      - name: Build file
-        run: npm run build
-       
-      - name: Verify build output
-        run: ls -R dist/  
-
       - name: copy file via ssh password
         uses: appleboy/scp-action@v0.1.4
         with:
             host: ${{ secrets.SSH_HOST }}
             key: ${{ secrets.SSH_KEY }}
             username: ${{ secrets.SSH_USERNAME }}
-            source: dist/*
+            source: /*
             target: ~/sample-repo/html/
             strip_components: 1
 
@@ -52,6 +40,8 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd ~/sample-repo/
-            npm install -g serve
-            serve -s
-            npm run dev
+            sudo apt-get update
+            sudo apt install nodejs npm
+            npm install
+            npm run start
+
