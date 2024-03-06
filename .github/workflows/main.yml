@@ -1,5 +1,5 @@
-name: Build & Deploy
 
+name: Build & Deploy
 on:
   push:
     branches:
@@ -8,47 +8,54 @@ on:
     branches:
       - main
 
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
+    
     env:
-      CI: false
-
+        CI: false
+        
     steps:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: 18
-
+            node-version: 18
+      
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Install dependencies
+        
+      - name: install dependencies
         run: npm install
-
-      - name: Build files
+    
+      - name: Build file
         run: npm run build
-
-      - name: Copy files via SSH password
+        
+      - name: copy file via ssh password
         uses: appleboy/scp-action@v0.1.4
         with:
-          host: ${{ secrets.SSH_HOST }}
-          key: ${{ secrets.SSH_KEY }}
-          username: ${{ secrets.SSH_USERNAME }}
-          source: build/*
-          target: /var/www/sample-repo/html/
-          strip_components: 1
+            host: ${{ secrets.SSH_HOST }}
+            key: ${{ secrets.SSH_KEY }}
+            username: ${{ secrets.SSH_USERNAME }}
+            source: build/*
+            target: ../var/www/sample-repo/html/
+            strip_components: 1
 
-      - name: Deploy successfully
-        uses: appleboy/ssh-action@v0.4.0
+      - name: Deployed Successfully
+        uses: appleboy/scp-action@v0.1.4
         with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
+            host: ${{ secrets.SSH_HOST }}
+            key: ${{ secrets.SSH_KEY }}
+            username: ${{ secrets.SSH_USERNAME }}
+            source: .github/workflows/deploy.sh
+            target: /var/www/sample-repo/
+            strip_components: 1
+            script: |
             cd /var/www/sample-repo/
             nvm use 18
             npm install -g serve
             serve -s html
             npm run dev
+
+
+            
