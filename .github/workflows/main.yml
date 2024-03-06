@@ -48,8 +48,8 @@ jobs:
         uses: appleboy/ssh-action@v0.1.4
         with:
           host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
+          username: ${{ secrets.SSH_USERNAME }}
           script: |
             cd ~/sample-repo/
             sudo apt-get update
@@ -57,5 +57,5 @@ jobs:
             sudo npm install -g npm@latest
             sudo npm install -g serve
             sudo serve -s html -l 3000
-            
+
 
