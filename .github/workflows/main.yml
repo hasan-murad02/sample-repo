@@ -42,7 +42,7 @@ jobs:
             strip_components: 1
 
       - name: Deploy successfully
-        uses: appleboy/ssh-action@v0.4.0
+        uses: appleboy/ssh-action@v0.1.4
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
