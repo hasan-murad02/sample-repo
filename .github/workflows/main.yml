@@ -30,7 +30,10 @@ jobs:
     
       - name: Build file
         run: npm run build
-        
+       
+      - name: Verify build output
+        run: ls -R build/  
+
       - name: copy file via ssh password
         uses: appleboy/scp-action@v0.1.4
         with:
