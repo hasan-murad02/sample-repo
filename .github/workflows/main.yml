@@ -41,21 +41,15 @@ jobs:
             target: ../var/www/sample-repo/html/
             strip_components: 1
 
-      - name: Deployed Successfully
-        uses: appleboy/scp-action@v0.1.4
+      - name: Deploy successfully
+        uses: appleboy/ssh-action@v0.4.0
         with:
-            host: ${{ secrets.SSH_HOST }}
-            key: ${{ secrets.SSH_KEY }}
-            username: ${{ secrets.SSH_USERNAME }}
-            source: .github/workflows/deploy.sh
-            target: /var/www/sample-repo/
-            strip_components: 1
-            script: |
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
             cd /var/www/sample-repo/
             nvm use 18
             npm install -g serve
             serve -s html
             npm run dev
-
-
-            
