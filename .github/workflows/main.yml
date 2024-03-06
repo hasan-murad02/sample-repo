@@ -49,7 +49,6 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd /var/www/sample-repo/
-            nvm use 18
             npm install -g serve
-            serve -s html
+            serve -s
             npm run dev
