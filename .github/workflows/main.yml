@@ -32,7 +32,7 @@ jobs:
         run: npm run build
        
       - name: Verify build output
-        run: ls -R build/  
+        run: ls -R dist/  
 
       - name: copy file via ssh password
         uses: appleboy/scp-action@v0.1.4
@@ -40,7 +40,7 @@ jobs:
             host: ${{ secrets.SSH_HOST }}
             key: ${{ secrets.SSH_KEY }}
             username: ${{ secrets.SSH_USERNAME }}
-            source: build/*
+            source: dist/*
             target: ~/sample-repo/html/
             strip_components: 1
 
