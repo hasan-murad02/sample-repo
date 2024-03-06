@@ -38,7 +38,7 @@ jobs:
             key: ${{ secrets.SSH_KEY }}
             username: ${{ secrets.SSH_USERNAME }}
             source: build/*
-            target: ../var/www/sample-repo/html/
+            target: ~/sample-repo/html/
             strip_components: 1
 
       - name: Deploy successfully
@@ -48,7 +48,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           script: |
-            cd /var/www/sample-repo/
+            cd ~/sample-repo/
             npm install -g serve
             serve -s
             npm run dev
